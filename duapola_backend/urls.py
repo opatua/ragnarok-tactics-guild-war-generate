@@ -1,7 +1,15 @@
 from django.urls import path
-from duapola_backend.views import auth
+from django.conf.urls import include, url
+from duapola_backend import views
 
 urlpatterns = [
-    path('auth/login', auth.LoginView.as_view()),
-    path('auth/register', auth.RegisterView.as_view()),
+    url(
+        r'^api/(?P<version>(1))/',
+        include(
+            [
+                path('sign-in', views.SignInView.as_view()),
+                path('sign-up', views.SignUpView.as_view()),
+            ]
+        )
+    )
 ]
