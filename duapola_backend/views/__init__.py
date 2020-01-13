@@ -1,2 +1,2 @@
-from .sign_in import *
-from .sign_up import *
+from .login import *
+from .register import *

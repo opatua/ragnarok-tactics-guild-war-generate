@@ -7,8 +7,8 @@ urlpatterns = [
         r'^api/(?P<version>(1))/',
         include(
             [
-                path('sign-in', views.SignInView.as_view()),
-                path('sign-up', views.SignUpView.as_view()),
+                path('login', views.LoginView.as_view()),
+                path('register', views.RegisterView.as_view()),
             ]
         )
     )

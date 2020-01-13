@@ -148,17 +148,23 @@ AUTH_USER_MODEL = 'duapola_backend.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
+        'duapola_backend.libraries.viewset_response.ViewsetJSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'duapola_backend.utils.exception_handler.custom_exception_handler'
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
-JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=180),
-    'JWT_AUTH_HEADER_PREFIX': 'Bearer'
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=180),
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
 }
 
 # CORS HEADER CONFIGURATION

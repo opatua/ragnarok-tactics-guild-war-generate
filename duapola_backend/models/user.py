@@ -1,36 +1,22 @@
+import uuid
+
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from safedelete.models import SafeDeleteModel
+from simple_history.models import HistoricalRecords
 
-
-class UserManager(BaseUserManager):
-
-    def create_user(self, email, password, **extra_fields):
-        if extra_fields:
-            user = self.model(email=self.normalize_email(
-                email), name=extra_fields['name'])
-        else:
-            user = self.model(email=self.normalize_email(email))
-
-        user.set_password(password)
-        user.save()
-        return user
-
-    def create_superuser(self, email, password):
-        user = self.create_user(email, password)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-        return user
+from duapola_backend.managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     email = models.EmailField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    created_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    modified_date = models.DateTimeField(auto_now=True, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords(table_name='users_history')
 
     objects = UserManager()
 
@@ -41,4 +27,3 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         db_table = 'users'
-

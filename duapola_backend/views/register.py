@@ -5,10 +5,10 @@ from rest_framework.permissions import AllowAny
 from random import randint
 
 from duapola_backend.models import User
-from duapola_backend.serializers import SignUpSerializer, UserSerializer
+from duapola_backend.serializers import RegisterSerializer, UserSerializer
 
 
-class SignUpView(CreateAPIView):
+class RegisterView(CreateAPIView):
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
