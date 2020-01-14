@@ -1,6 +1,6 @@
-from django.http import JsonResponse
 from rest_framework.generics import CreateAPIView
 from http import HTTPStatus
+from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from random import randint
 
@@ -12,7 +12,7 @@ class RegisterView(CreateAPIView):
     permission_classes = (AllowAny,)
 
     def create(self, request, *args, **kwargs):
-        serializer = SignUpSerializer(data=request.data)
+        serializer = RegisterSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             user = User.objects.filter(
@@ -20,10 +20,7 @@ class RegisterView(CreateAPIView):
             )
 
             if user:
-                return JsonResponse(
-                    {'errors': 'User within given phone number is exist, Please Login.'},
-                    status=HTTPStatus.BAD_REQUEST
-                )
+                return Response({'detail': 'User within given phone number is exist, Please Login.'}, status=HTTPStatus.BAD_REQUEST)
 
             data = {
                 'email': serializer.validated_data['email'],
@@ -32,9 +29,5 @@ class RegisterView(CreateAPIView):
             }
 
             user = User.objects.create_user(**data)
-            user_serializer = UserSerializer(user)
 
-            return JsonResponse(
-                user_serializer.data,
-                status=HTTPStatus.CREATED
-            )
+            return Response(None, status=HTTPStatus.CREATED)
