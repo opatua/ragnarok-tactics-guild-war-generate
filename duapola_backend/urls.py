@@ -3,7 +3,7 @@ from django.conf.urls import include, url
 from duapola_backend import views
 
 urlpatterns = [
-    path('', include('duapola_admin.urls')),
+    path('backend', include('duapola_admin.urls')),
     url(
         r'^api/(?P<version>(1))/',
         include(
