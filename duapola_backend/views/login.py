@@ -3,7 +3,6 @@ from http import HTTPStatus
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework_jwt.settings import api_settings
 
 from duapola_backend.models import User
 from duapola_backend.serializers import UserSerializer
