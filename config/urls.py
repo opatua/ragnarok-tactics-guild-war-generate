@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin', admin.site.urls),
-    path('', include('duapola_backend.urls'))
+    path('django-admin', admin.site.urls),
+    path('', include('duapola_backend.urls')),
+    path('admin/', include('duapola_admin.urls')),
 ]
