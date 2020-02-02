@@ -10,6 +10,33 @@ urlpatterns = [
         name='admin_login'
     ),
 
+    # Category URLs
+    path(
+        'category/data',
+        views.CategoryDataView.as_view(),
+        name='category_data'
+    ),
+    path(
+        'category',
+        views.CategoryListView.as_view(),
+        name='category_index'
+    ),
+    path(
+        'category/create',
+        views.CategoryCreateView.as_view(),
+        name='category_create'
+    ),
+    path(
+        'category/<slug:pk>/update',
+        views.CategoryUpdateView.as_view(),
+        name='category_update'
+    ),
+    path(
+        'category/<slug:pk>/delete',
+        views.CategoryDeleteView.as_view(),
+        name='category_delete'
+    ),
+
     # Dashboard
     path(
         'dashboard',
