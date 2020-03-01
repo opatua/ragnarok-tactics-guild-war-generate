@@ -59,6 +59,20 @@
                                 <span>Category</span>
                             </a>
                         </li>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-layers"></i>
+                                <span>Product</span>
+                                <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
+                            </a>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="{% url 'product_family_index' %}" class="waves-effect">
+                                        <span>Product Family</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="{% url 'user_index' %}" class="waves-effect">
                                 <i class="mdi mdi-account"></i>

@@ -24,7 +24,7 @@ class ChangePasswordView(CreateAPIView):
 
             if new_password != confirm_password:
                 return Response(
-                    {'errors': 'Password and Confirmation Password not same'},
+                    {'detail': 'Password and Confirmation Password not same'},
                     status=HTTPStatus.BAD_REQUEST
                 )
 
@@ -34,6 +34,8 @@ class ChangePasswordView(CreateAPIView):
             user_serializer = UserSerializer(instance=user)
 
             return Response(
-                {'user': user_serializer.data},
+                {
+                    'data': {'user': user_serializer.data}
+                },
                 status=HTTPStatus.OK
             )

@@ -8,4 +8,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Seeding')
 
-        call_command('seed_city')
+        call_command('seed_country')
+        call_command('seed_currency')

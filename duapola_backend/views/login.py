@@ -34,4 +34,4 @@ class LoginView(CreateAPIView):
             'user': UserSerializer(instance=user).data
         }
 
-        return Response(payload)
+        return Response({'data': payload}, status=HTTPStatus.OK)
