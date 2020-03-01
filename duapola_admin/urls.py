@@ -20,6 +20,13 @@ urlpatterns = [
     path('product-family/<slug:pk>/update', views.ProductFamilyUpdateView.as_view(), name='product_family_update'),
     path('product-family/<slug:pk>/delete', views.ProductFamilyDeleteView.as_view(), name='product_family_delete'),
 
+    # Product URLs
+    path('product/data',views.ProductDataView.as_view(), name='product_data'),
+    path('product', views.ProductListView.as_view(), name='product_index'),
+    path('product/create', views.ProductCreateView.as_view(), name='product_create'),
+    path('product/<slug:pk>/update', views.ProductUpdateView.as_view(), name='product_update'),
+    path('product/<slug:pk>/delete', views.ProductDeleteView.as_view(), name='product_delete'),
+
     # Dashboard
     path('dashboard', views.DashboardView.as_view(), name='admin_dashboard'),
 
