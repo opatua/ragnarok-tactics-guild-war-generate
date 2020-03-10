@@ -13,6 +13,13 @@ urlpatterns = [
     path('category/<slug:pk>/update', views.CategoryUpdateView.as_view(), name='category_update'),
     path('category/<slug:pk>/delete', views.CategoryDeleteView.as_view(), name='category_delete'),
 
+    # Color URLs
+    path('color/data',views.ColorDataView.as_view(), name='color_data'),
+    path('color', views.ColorListView.as_view(), name='color_index'),
+    path('color/create', views.ColorCreateView.as_view(), name='color_create'),
+    path('color/<slug:pk>/update', views.ColorUpdateView.as_view(), name='color_update'),
+    path('color/<slug:pk>/delete', views.ColorDeleteView.as_view(), name='color_delete'),
+
     # Product Family URLs
     path('product-family/data',views.ProductFamilyDataView.as_view(), name='product_family_data'),
     path('product-family', views.ProductFamilyListView.as_view(), name='product_family_index'),

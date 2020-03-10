@@ -1,4 +1,5 @@
 from .category import *
+from .color import *
 from .country import *
 from .currency import *
 from .product_family import *
