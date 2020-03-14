@@ -20,6 +20,20 @@ urlpatterns = [
     path('color/<slug:pk>/update', views.ColorUpdateView.as_view(), name='color_update'),
     path('color/<slug:pk>/delete', views.ColorDeleteView.as_view(), name='color_delete'),
 
+    # Country URLs
+    path('country/data',views.CountryDataView.as_view(), name='country_data'),
+    path('country', views.CountryListView.as_view(), name='country_index'),
+    path('country/create', views.CountryCreateView.as_view(), name='country_create'),
+    path('country/<slug:pk>/update', views.CountryUpdateView.as_view(), name='country_update'),
+    path('country/<slug:pk>/delete', views.CountryDeleteView.as_view(), name='country_delete'),
+
+    # Currency URLs
+    path('currency/data',views.CurrencyDataView.as_view(), name='currency_data'),
+    path('currency', views.CurrencyListView.as_view(), name='currency_index'),
+    path('currency/create', views.CurrencyCreateView.as_view(), name='currency_create'),
+    path('currency/<slug:pk>/update', views.CurrencyUpdateView.as_view(), name='currency_update'),
+    path('currency/<slug:pk>/delete', views.CurrencyDeleteView.as_view(), name='currency_delete'),
+
     # Product Family URLs
     path('product-family/data',views.ProductFamilyDataView.as_view(), name='product_family_data'),
     path('product-family', views.ProductFamilyListView.as_view(), name='product_family_index'),

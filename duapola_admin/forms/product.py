@@ -1,16 +1,21 @@
 from django import forms
 
+from duapola_backend.enums import Size
 from duapola_backend.models import Product
 
 
 class ProductForm(forms.ModelForm):
 
+    size = forms.ChoiceField(choices=Size.choices())
     class Meta:
+
         model = Product
         fields = (
             'product_family',
             'name',
             'sku',
+            'size',
+            'color',
             'quantity',
             'currency',
             'price',
