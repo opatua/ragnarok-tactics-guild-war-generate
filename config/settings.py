@@ -147,6 +147,7 @@ AUTH_USER_MODEL = 'duapola_backend.User'
 
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'duapola_backend.libraries.custom_pagination.CustomPagination',
     'DEFAULT_RENDERER_CLASSES': (
         'duapola_backend.libraries.viewset_response.ViewsetJSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
@@ -155,8 +156,10 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'duapola_backend.libraries.auth.CapabilitiesPermission',
     ),
+    'PAGE_SIZE': 10,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 }
 
 SIMPLE_JWT = {
