@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from safedelete.models import SafeDeleteModel
 from simple_history.models import HistoricalRecords

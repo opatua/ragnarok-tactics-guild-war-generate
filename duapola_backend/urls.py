@@ -6,11 +6,13 @@ from duapola_backend import views
 
 router = DefaultRouter(trailing_slash=False)
 router.register(r'address', views.AddressViewSet, 'address')
+router.register(r'cart', views.CartViewSet, 'cart')
 router.register(r'category', views.CategoryViewSet, 'category')
 router.register(r'city', views.CityViewSet, 'city')
 router.register(r'color', views.ColorViewSet, 'color')
 router.register(r'country', views.CountryViewSet, 'country')
 router.register(r'currency', views.CurrencyViewSet, 'currency')
+router.register(r'product', views.ProductViewSet, 'currency')
 
 urlpatterns = [
     url(

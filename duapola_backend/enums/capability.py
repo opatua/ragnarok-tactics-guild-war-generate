@@ -17,6 +17,18 @@ class Capability(Enum):
     CATEGORY_UPDATE = 'category:update'
     CATEGORY_DESTROY = 'category:destroy'
 
+    CART_LIST = 'cart:list'
+    CART_CREATE = 'cart:create'
+    CART_RETRIEVE = 'cart:retrieve'
+    CART_UPDATE = 'cart:update'
+    CART_DESTROY = 'cart:destroy'
+
+    CART_ITEM_LIST = 'cart-item:list'
+    CART_ITEM_CREATE = 'cart-item:create'
+    CART_ITEM_RETRIEVE = 'cart-item:retrieve'
+    CART_ITEM_UPDATE = 'cart-item:update'
+    CART_ITEM_DESTROY = 'cart-item:destroy'
+
     CITY_LIST = 'city:list'
     CITY_CREATE = 'city:create'
     CITY_RETRIEVE = 'city:retrieve'
