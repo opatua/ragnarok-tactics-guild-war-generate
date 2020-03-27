@@ -6,10 +6,14 @@ from random import randint
 
 from duapola_backend.models import User
 from duapola_backend.serializers import RegisterSerializer, UserSerializer
+from duapola_backend.services import Token
 
 
 class RegisterView(CreateAPIView):
     permission_classes = (AllowAny,)
+
+    def __init__(self):
+        self._token = Token()
 
     def create(self, request, *args, **kwargs):
         serializer = RegisterSerializer(data=request.data)
@@ -30,4 +34,11 @@ class RegisterView(CreateAPIView):
 
             user = User.objects.create_user(**data)
 
-            return Response(None, status=HTTPStatus.CREATED)
+            payload = {
+                'data': {
+                    'token': self._token.generate(user),
+                    'user': UserSerializer(instance=user).data
+                }
+            }
+
+            return Response(payload, status=HTTPStatus.CREATED)
