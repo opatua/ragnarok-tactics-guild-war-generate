@@ -19,6 +19,5 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('django-admin', admin.site.urls),
-    path('', include('duapola_backend.urls')),
-    path('admin/', include('duapola_admin.urls')),
+    path('', include('ragnarok.urls')),
 ]

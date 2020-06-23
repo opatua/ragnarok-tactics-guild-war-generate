@@ -48,8 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Custom user apps
-    'duapola_backend',
-    'duapola_admin',
+    'ragnarok',
 ]
 
 MIDDLEWARE = [
@@ -99,6 +98,8 @@ DATABASES = {
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
+LOGIN_URL = '/'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -143,32 +144,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
-AUTH_USER_MODEL = 'duapola_backend.User'
+AUTH_USER_MODEL = 'ragnarok.User'
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'duapola_backend.libraries.custom_pagination.CustomPagination',
-    'DEFAULT_RENDERER_CLASSES': (
-        'duapola_backend.libraries.viewset_response.ViewsetJSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'duapola_backend.libraries.auth.CapabilitiesPermission',
-    ),
-    'PAGE_SIZE': 10,
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
-}
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=180),
-
-    'AUTH_HEADER_TYPES': ('Bearer',),
-
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-}
 
 # CORS HEADER CONFIGURATION
 # ------------------------------------------------------------------------------
