@@ -8,7 +8,7 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'name', 'password1', 'password2')
+        fields = ('email', 'name', 'country', 'password1', 'password2')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -52,7 +52,7 @@ class UserProfileEditForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
         for field in self.Meta.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control', })
 
 
 class UserPasswordChangeForm(forms.ModelForm):
@@ -73,4 +73,5 @@ class UserPasswordChangeForm(forms.ModelForm):
 
         self.fields['password'].widget = forms.PasswordInput()
         self.fields['password'].widget.attrs.update(
-            {'class': 'form-control', 'type': 'password'})
+            {'class': 'form-control', 'type': 'password', },
+        )

@@ -17,7 +17,7 @@ class CharacterForm(forms.ModelForm):
         super(CharacterForm, self).__init__(*args, **kwargs)
 
         for field in self.Meta.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control', })
 
 
 class TeamForm(forms.ModelForm):
@@ -33,7 +33,7 @@ class TeamForm(forms.ModelForm):
         super(TeamForm, self).__init__(*args, **kwargs)
 
         for field in self.Meta.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control', })
 
 
 TeamFormset = inlineformset_factory(
@@ -41,5 +41,5 @@ TeamFormset = inlineformset_factory(
     Team,
     form=TeamForm,
     extra=1,
-    can_delete=True
+    can_delete=True,
 )

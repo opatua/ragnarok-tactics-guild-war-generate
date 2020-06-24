@@ -52,13 +52,15 @@ class CharacterDataView(BaseDatatableView):
         return qs
 
 
-class CharacterListView(TemplateView):
+class CharacterListView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     template_name = 'character/index.html'
 
 
-class CharacterCreateView(CreateView):
+class CharacterCreateView(LoginRequiredMixin, CreateView):
+    login_url = reverse_lazy('login')
+    redirect_field_name = 'redirect_to'
     model = Character
     template_name = 'character/form.html'
     form_class = CharacterForm
@@ -90,7 +92,9 @@ class CharacterCreateView(CreateView):
         return super(CharacterCreateView, self).form_valid(form)
 
 
-class CharacterUpdateView(UpdateView):
+class CharacterUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = reverse_lazy('login')
+    redirect_field_name = 'redirect_to'
     model = Character
     template_name = 'character/form.html'
     form_class = CharacterForm
@@ -124,7 +128,7 @@ class CharacterUpdateView(UpdateView):
         return super(CharacterUpdateView, self).form_valid(form)
 
 
-class CharacterDeleteView(DeleteView):
+class CharacterDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = Character

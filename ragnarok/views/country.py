@@ -52,13 +52,13 @@ class CountryDataView(BaseDatatableView):
         return qs
 
 
-class CountryListView(TemplateView):
+class CountryListView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     template_name = "country/index.html"
 
 
-class CountryCreateView(CreateView):
+class CountryCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = Country
@@ -67,7 +67,7 @@ class CountryCreateView(CreateView):
     success_url = reverse_lazy("country_index")
 
 
-class CountryUpdateView(UpdateView):
+class CountryUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = Country
@@ -76,7 +76,7 @@ class CountryUpdateView(UpdateView):
     success_url = reverse_lazy("country_index")
 
 
-class CountryDeleteView(DeleteView):
+class CountryDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = Country

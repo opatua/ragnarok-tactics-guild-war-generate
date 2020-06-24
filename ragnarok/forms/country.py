@@ -16,4 +16,4 @@ class CountryForm(forms.ModelForm):
         super(CountryForm, self).__init__(*args, **kwargs)
 
         for field in self.Meta.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control', })

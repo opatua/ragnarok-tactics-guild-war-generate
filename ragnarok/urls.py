@@ -19,8 +19,13 @@ urlpatterns = [
     path('character/<slug:pk>/update', views.CharacterUpdateView.as_view(), name='character_update'),
     path('character/<slug:pk>/delete', views.CharacterDeleteView.as_view(), name='character_delete'),
 
+    path('guild-war-character/data', views.GuildWarCharacterDataView.as_view(), name='guild_war_character_data'),
+    path('guild-war-character', views.GuildWarCharacterListView.as_view(), name='guild_war_character_index'),
+    path('guild-war-character/create', views.GuildWarCharacterCreateView.as_view(), name='guild_war_character_create'),
+    path('guild-war-character/<slug:pk>/update', views.GuildWarCharacterUpdateView.as_view(), name='guild_war_character_update'),
+    path('guild-war/suggestion', views.GuildWarSuggestionView.as_view(), name='guild_war_suggestion'),
+
     # Dashboard
-    path('guild-war-suggestion', views.GuildWarSuggestionView.as_view(), name='guild_war_suggestion'),
     path('logout', views.LogoutView.as_view(), name='logout'),
 
     # User URLs

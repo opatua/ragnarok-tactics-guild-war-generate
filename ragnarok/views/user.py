@@ -50,13 +50,13 @@ class UserDataView(BaseDatatableView):
         return qs
 
 
-class UserListView(TemplateView):
+class UserListView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     template_name = "user/index.html"
 
 
-class UserCreateView(CreateView):
+class UserCreateView(LoginRequiredMixin, CreateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = User
@@ -65,7 +65,7 @@ class UserCreateView(CreateView):
     success_url = reverse_lazy("user_index")
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = User
@@ -74,7 +74,7 @@ class UserUpdateView(UpdateView):
     success_url = reverse_lazy("user_index")
 
 
-class UserPasswordChangeView(UpdateView):
+class UserPasswordChangeView(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = User
@@ -88,7 +88,7 @@ class UserPasswordChangeView(UpdateView):
         return initial
 
 
-class UserDeleteView(DeleteView):
+class UserDeleteView(LoginRequiredMixin, DeleteView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = User
