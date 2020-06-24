@@ -18,9 +18,9 @@ class GuildWarSuggestionView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         teams = Team.objects.prefetch_related('character').order_by('point')
-        first_three_groups = self.chunks(teams, 3)
-        team_groups = self.generate(
-            self.chunks(first_three_groups[:-1], 5)
+        first_three_groups = self._chunks(teams, 3)
+        team_groups = self._generate(
+            self._chunks(first_three_groups[:-1], 5)
         ) + [first_three_groups[-1]]
 
         process_team_groups = []
@@ -40,14 +40,14 @@ class GuildWarSuggestionView(LoginRequiredMixin, TemplateView):
 
         return context
 
-    def chunks(self, lst, N):
+    def _chunks(self, lst, N):
         return [lst[n:n+N] for n in range(0, len(lst), N)]
 
-    def generate(self, list_):
+    def _generate(self, list_):
         small = list(itertools.chain.from_iterable(list_[0]))
         big = list(itertools.chain.from_iterable(list_[1]))
         big.reverse()
-        big = self.chunks(big, 2)
+        big = self._chunks(big, 2)
 
         small_iter = iter(small)
         new_group = []
@@ -58,4 +58,4 @@ class GuildWarSuggestionView(LoginRequiredMixin, TemplateView):
 
             new_group.append(big_set)
 
-        return self.chunks(list(small_iter), 3) + new_group
+        return self._chunks(list(small_iter), 3) + new_group
