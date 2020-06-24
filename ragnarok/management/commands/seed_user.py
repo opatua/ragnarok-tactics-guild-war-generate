@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from ragnarok.models import Country
+from ragnarok.models import User
 
 
 class Command(BaseCommand):
@@ -9,8 +9,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Seeding: Users')
 
-        for country_id, country_name in self.countries.items():
-            Country.objects.create(
-                id=country_id,
-                name=country_name
+        for index in range(0, 30):
+            User.objects.create_user(
+                email=f'user_{index}@example.com',
+                password='!QAZxsw2',
+                name=f'user_{index}',
             )

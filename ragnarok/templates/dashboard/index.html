@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
+{% load custom_tags %}
 
 {% block content %}
-    {{ user }}
+    {% for character_group in character_groups%}
+        <br />
+        Total Point = {{ character_group|get_item:'total_point' }}
+        <br />
+        Average Point = {{ character_group|get_item:'average_point' }}
+        {% for character in character_group|get_item:'character_group' %}
+            <br />
+            {{ character.name}}: {{ character.point }}
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

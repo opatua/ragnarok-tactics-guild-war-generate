@@ -13,6 +13,7 @@ class UserDataView(BaseDatatableView):
     columns = [
         'email',
         'name',
+        'country',
         'is_active',
         'created_at',
         'updated_at',

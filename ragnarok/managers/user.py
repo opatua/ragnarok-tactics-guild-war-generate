@@ -6,7 +6,7 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if extra_fields:
             user = self.model(email=self.normalize_email(
-                email), name=extra_fields['name'])
+                email), **extra_fields)
         else:
             user = self.model(email=self.normalize_email(email))
 
