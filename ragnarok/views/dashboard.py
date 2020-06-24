@@ -18,8 +18,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         characters = Character.objects.order_by('point')
-        data = [character for character in characters]
-        first_three_groups = self.chunks(data, 3)
+        first_three_groups = self.chunks(characters, 3)
         character_groups = self.generate(
             self.chunks(first_three_groups[:-1], 5)
         ) + [first_three_groups[-1]]
@@ -46,12 +45,9 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
     def generate(self, list_):
         small = list(itertools.chain.from_iterable(list_[0]))
-        big = self.chunks(
-            list(
-                itertools.chain.from_iterable(list_[1])
-            ),
-            2
-        )
+        big = list(itertools.chain.from_iterable(list_[1]))
+        big.reverse()
+        big = self.chunks(big, 2)
 
         small_iter = iter(small)
         new_group = []
