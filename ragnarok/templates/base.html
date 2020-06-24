@@ -46,12 +46,19 @@
                 <div id="sidebar-menu">
                     <ul>
                         <li class="menu-title">Main</li>
-
-                        <li>
-                            <a href="{% url 'admin_dashboard' %}" class="waves-effect">
-                                <i class="mdi mdi-chart-pie"></i>
-                                <span>Dashboard</span>
+                        <li class="has_sub">
+                            <a href="javascript:void(0);" class="waves-effect">
+                                <i class="mdi mdi-layers"></i>
+                                <span>Guild War</span>
+                                <span class="float-right"><i class="mdi mdi-chevron-right"></i></span>
                             </a>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="{% url 'guild_war_suggestion' %}" class="waves-effect">
+                                        <span>Suggestion</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{% url 'country_index' %}" class="waves-effect">

@@ -9,7 +9,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write('Seeding: Users')
 
-        for index in range(0, 30):
+        for index in range(0, 31):
             User.objects.create_user(
                 email=f'user_{index}@example.com',
                 password='!QAZxsw2',

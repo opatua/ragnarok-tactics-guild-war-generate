@@ -20,7 +20,7 @@ urlpatterns = [
     path('character/<slug:pk>/delete', views.CharacterDeleteView.as_view(), name='character_delete'),
 
     # Dashboard
-    path('dashboard', views.DashboardView.as_view(), name='admin_dashboard'),
+    path('guild-war-suggestion', views.GuildWarSuggestionView.as_view(), name='guild_war_suggestion'),
     path('logout', views.LogoutView.as_view(), name='logout'),
 
     # User URLs

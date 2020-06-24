@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <form method="post">{% csrf_token %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Character {{ title }}</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form.as_p }}
+                        <div class="table-responsive mt-5 mb-5">
+                            <table class="table table-striped">
+                                <h5 class="card-title">Teams</h5>
+                                {{ teams.management_form }}
+
+                                {% for form in teams.forms %}
+                                    {% if forloop.first %}
+                                        <thead>
+                                        <tr>
+                                            {% for field in form.visible_fields %}
+                                                <th>{{ field.label|capfirst }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                    {% endif %}
+                                    <tr class="formset_row">
+                                        {% for field in form.visible_fields %}
+                                            <td>
+                                                {# Include the hidden fields in the form #}
+                                                {% if forloop.first %}
+                                                    {% for hidden in form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {{ field.errors.as_ul }}
+                                                {{ field }}
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                        <hr class="mb-5">
+                        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                        <a href="{% url 'character_index' %}" class="btn btn-lg btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"></script>
+    <script type="text/javascript">
+        $('.formset_row').formset({
+            addText: '<button class="btn btn-info">Add Team</button>',
+            deleteText: '<button class="btn btn-danger">Delete</button>',
+            prefix: '{{ teams.prefix }}'
+        });
+    </script>
+{% endblock %}

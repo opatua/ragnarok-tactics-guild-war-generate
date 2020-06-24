@@ -18,7 +18,7 @@ class LoginView(FormView):
         user = authenticate(email=email, password=password)
         if user is not None:
             login(self.request, user)
-            return HttpResponseRedirect(reverse_lazy('admin_dashboard'))
+            return HttpResponseRedirect(reverse_lazy('guild_war_suggestion'))
         else:
             # messages.success(request, "Invalid Login")
             return HttpResponseRedirect(reverse_lazy('login'))

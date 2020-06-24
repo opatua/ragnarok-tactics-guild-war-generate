@@ -1,21 +1,21 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import transaction
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
 from ragnarok.models import Character
-from ragnarok.forms import CharacterForm
+from ragnarok.forms import CharacterForm, TeamFormset
 
 
 class CharacterDataView(BaseDatatableView):
     model = Character
     columns = [
         'name',
-        'point',
         'created_at',
         'updated_at',
-        'manage'
+        'manage',
     ]
 
     def render_column(self, row, column):
@@ -59,21 +59,69 @@ class CharacterListView(TemplateView):
 
 
 class CharacterCreateView(CreateView):
-    login_url = reverse_lazy('login')
-    redirect_field_name = 'redirect_to'
     model = Character
-    template_name = 'character/create.html'
+    template_name = 'character/form.html'
     form_class = CharacterForm
     success_url = reverse_lazy('character_index')
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(
+            CharacterCreateView,
+            self
+        ).get_context_data(*args, **kwargs)
+        context['title'] = 'Create'
+        if self.request.POST:
+            context['teams'] = TeamFormset(
+                self.request.POST
+            )
+        else:
+            context['teams'] = TeamFormset()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        teams = context['teams']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if teams.is_valid():
+                teams.instance = self.object
+                teams.save()
+        return super(CharacterCreateView, self).form_valid(form)
 
 
 class CharacterUpdateView(UpdateView):
-    login_url = reverse_lazy('login')
-    redirect_field_name = 'redirect_to'
     model = Character
-    template_name = 'character/update.html'
+    template_name = 'character/form.html'
     form_class = CharacterForm
     success_url = reverse_lazy('character_index')
+
+    def get_context_data(self, **kwargs):
+        context = super(
+            CharacterUpdateView,
+            self
+        ).get_context_data(**kwargs)
+        context['title'] = 'Update - {}'.format(self.object.name)
+        if self.request.POST:
+            context['teams'] = TeamFormset(
+                self.request.POST,
+                instance=self.object
+            )
+        else:
+            context['teams'] = TeamFormset(
+                instance=self.object
+            )
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        teams = context['teams']
+        with transaction.atomic():
+            self.object = form.save()
+            if teams.is_valid():
+                teams.instance = self.object
+                teams.save()
+        return super(CharacterUpdateView, self).form_valid(form)
 
 
 class CharacterDeleteView(DeleteView):

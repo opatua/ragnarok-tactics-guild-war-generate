@@ -5,15 +5,16 @@ from safedelete.models import SafeDeleteModel
 from simple_history.models import HistoricalRecords
 
 
-class Character(SafeDeleteModel):
+class GuildWarTeam(SafeDeleteModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user = models.ForeignKey(
-        'User',
+    guild_war = models.ForeignKey(
+        'GuildWar',
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
     )
-    name = models.CharField(max_length=255)
+    team = models.ForeignKey(
+        'Team',
+        on_delete=models.CASCADE,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     history = HistoricalRecords()

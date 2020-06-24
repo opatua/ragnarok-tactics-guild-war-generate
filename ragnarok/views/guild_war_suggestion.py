@@ -6,37 +6,37 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from random import randint
 
-from ragnarok.models import Character
+from ragnarok.models import Team
 
 
-class DashboardView(LoginRequiredMixin, TemplateView):
+class GuildWarSuggestionView(LoginRequiredMixin, TemplateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
-    template_name = "dashboard/index.html"
+    template_name = "guild_war/sugesstion.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        characters = Character.objects.order_by('point')
-        first_three_groups = self.chunks(characters, 3)
-        character_groups = self.generate(
+        teams = Team.objects.prefetch_related('character').order_by('point')
+        first_three_groups = self.chunks(teams, 3)
+        team_groups = self.generate(
             self.chunks(first_three_groups[:-1], 5)
         ) + [first_three_groups[-1]]
 
-        process_character_groups = []
-        for character_group in character_groups:
+        process_team_groups = []
+        for team_group in team_groups:
             total_point = 0
 
-            for character in character_group:
-                total_point += character.point
+            for team in team_group:
+                total_point += team.point
 
-            process_character_groups.append({
+            process_team_groups.append({
                 'total_point': total_point,
-                'average_point': round(total_point / len(character_group), 2),
-                'character_group': character_group,
+                'average_point': round(total_point / len(team_group), 2),
+                'team_group': team_group,
             })
 
-        context['character_groups'] = process_character_groups
+        context['team_groups'] = process_team_groups
 
         return context
 

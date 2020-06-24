@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="card mb-4 print-box">
+        <div class="card-header">
+            <strong>Guild War</strong>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive-sm">
+                <table class="table table-striped">
+                        {% for team_group in team_groups %}
+                            <thead>
+                                <tr>
+                                    <th>Tower</th>
+                                    <th>Character</th>
+                                    <th>Team CP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for team in team_group|get_item:'team_group' %}
+                                        <tr>
+                                            {% if forloop.parentloop.counter == 11 %}
+                                                <td class="left strong">Castle</td>
+                                            {% else %}
+                                                <td class="left strong">Tower {{ forloop.parentloop.counter  }}</td>
+                                            {% endif %}
+                                            <td class="left">{{ team.character.name }}</td>
+                                            <td class="right">{{ team.point }}</td>
+                                        </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>Total Point</td>
+                                    <td colspan="2" class="center">{{ team_group|get_item:'total_point' }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Average Point</td>
+                                    <td colspan="2" class="center">{{ team_group|get_item:'average_point' }}</td>
+                                </tr>
+                            </tbody>
+                        {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+    {% comment %} {% for team_group in team_groups%}
+        <br />
+        Total Point =
+        <br />
+        Average Point = {{ team_group|get_item:'average_point' }}
+        {% for team in team_group|get_item:'team_group' %}
+            <br />
+            {{ team.character.name}}: {{ team.point }}
+        {% endfor %}
+    {% endfor %} {% endcomment %}
+{% endblock %}
