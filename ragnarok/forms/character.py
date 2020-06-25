@@ -21,6 +21,14 @@ class CharacterForm(forms.ModelForm):
 
 
 class TeamForm(forms.ModelForm):
+    point = forms.IntegerField(
+        required=True,
+        widget=forms.NumberInput(
+            attrs={
+                'placeholder': 'First 4 digits of your CP team'
+            },
+        ),
+    )
 
     class Meta:
         model = Team
