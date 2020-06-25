@@ -57,7 +57,7 @@ class GuildWarSuggestionView(LoginRequiredMixin, TemplateView):
             return []
         small = list(itertools.chain.from_iterable(list_[0]))
         if len(list_) < 2:
-            return [small]
+            return self._chunks(small, 3)
         big = list(itertools.chain.from_iterable(list_[1]))
         big.reverse()
         big = self._chunks(big, 2)
