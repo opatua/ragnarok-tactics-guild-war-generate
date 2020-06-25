@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
-from ragnarok.models import Character
+from ragnarok.models import Character, Team
 from ragnarok.forms import CharacterForm, TeamFormset
 
 
@@ -134,3 +134,8 @@ class CharacterDeleteView(LoginRequiredMixin, DeleteView):
     model = Character
     template_name = 'character/delete.html'
     success_url = reverse_lazy('character_index')
+
+    def delete(self, request, *args, **kwargs):
+        Team.objects.filter(character_id=kwargs.get('pk')).delete()
+
+        return super().delete(request, *args, **kwargs)
