@@ -11,14 +11,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{% url 'resonance_create' %}" class="btn btn-primary float-right m-t-5">Create</a>
-                    <h5>Resonance</h5>
+                    <a href="{% url 'monster_create' %}" class="btn btn-primary float-right m-t-5">Create</a>
+                    <h5>Monster</h5>
                 </div>
                 <div class="card-body">
                     <table id="table" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Faction</th>
                                 <th>Manage</th>
                             </tr>
                         </thead>
@@ -40,7 +41,7 @@ $(document).ready(function() {
         "processing": true,
         "serverSide": true,
         "ordering": false,
-        "ajax": "{% url 'resonance_data' %}"
+        "ajax": "{% url 'monster_data' %}"
     });
 });
 </script>

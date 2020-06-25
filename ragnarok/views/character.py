@@ -13,18 +13,10 @@ class CharacterDataView(BaseDatatableView):
     model = Character
     columns = [
         'name',
-        'created_at',
-        'updated_at',
         'manage',
     ]
 
     def render_column(self, row, column):
-        if column == 'created_at':
-            date = row.created_at
-            return date.strftime('%Y-%m-%d %H:%M')
-        if column == 'updated_at':
-            date = row.updated_at
-            return date.strftime('%Y-%m-%d %H:%M')
         if column == 'manage':
             update_link = reverse_lazy(
                 'character_update',
