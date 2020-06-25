@@ -75,13 +75,13 @@ class MonsterCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        MonsterElements = context['monster_elements']
+        monster_elements = context['monster_elements']
         with transaction.atomic():
             self.object = form.save()
 
-            if MonsterElements.is_valid():
-                MonsterElements.instance = self.object
-                MonsterElements.save()
+            if monster_elements.is_valid():
+                monster_elements.instance = self.object
+                monster_elements.save()
         return super(MonsterCreateView, self).form_valid(form)
 
 
@@ -112,12 +112,12 @@ class MonsterUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        MonsterElements = context['monster_elements']
+        monster_elements = context['monster_elements']
         with transaction.atomic():
             self.object = form.save()
-            if MonsterElements.is_valid():
-                MonsterElements.instance = self.object
-                MonsterElements.save()
+            if monster_elements.is_valid():
+                monster_elements.instance = self.object
+                monster_elements.save()
         return super(MonsterUpdateView, self).form_valid(form)
 
 

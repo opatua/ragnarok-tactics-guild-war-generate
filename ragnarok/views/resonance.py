@@ -74,13 +74,13 @@ class ResonanceCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        ResonaceRecipes = context['resonance_recipes']
+        resonance_recipes = context['resonance_recipes']
         with transaction.atomic():
             self.object = form.save()
 
-            if ResonaceRecipes.is_valid():
-                ResonaceRecipes.instance = self.object
-                ResonaceRecipes.save()
+            if resonance_recipes.is_valid():
+                resonance_recipes.instance = self.object
+                resonance_recipes.save()
         return super(ResonanceCreateView, self).form_valid(form)
 
 
@@ -111,12 +111,12 @@ class ResonanceUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        ResonaceRecipes = context['resonance_recipes']
+        resonance_recipes = context['resonance_recipes']
         with transaction.atomic():
             self.object = form.save()
-            if ResonaceRecipes.is_valid():
-                ResonaceRecipes.instance = self.object
-                ResonaceRecipes.save()
+            if resonance_recipes.is_valid():
+                resonance_recipes.instance = self.object
+                resonance_recipes.save()
         return super(ResonanceUpdateView, self).form_valid(form)
 
 
