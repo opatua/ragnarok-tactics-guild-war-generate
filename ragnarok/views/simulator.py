@@ -50,8 +50,6 @@ class SimulatorCreateView(CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         simulator_attributes = context['simulator_attributes']
-        # print(simulator_attributes)
-        # print(self.object.name)
         self.object = form.save(commit=False)
 
         if not simulator_attributes.is_valid():
