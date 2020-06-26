@@ -7,7 +7,7 @@ from simple_history.models import HistoricalRecords
 from ragnarok.enums import ElementEnum
 
 
-class ResonaceRecipe(SafeDeleteModel):
+class ResonanceRecipe(SafeDeleteModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     resonance = models.ForeignKey(
         'Resonance',
@@ -23,4 +23,4 @@ class ResonaceRecipe(SafeDeleteModel):
     history = HistoricalRecords()
 
     def __str__(self):
-        return f'{self.resonance.name} - {element}'
+        return f'{self.resonance.name} - {self.element}'

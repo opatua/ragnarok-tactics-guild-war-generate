@@ -12,6 +12,7 @@ class MonsterElement(SafeDeleteModel):
     monster = models.ForeignKey(
         'Monster',
         on_delete=models.CASCADE,
+        related_name='elements',
     )
     element = models.CharField(
         max_length=255,
@@ -22,4 +23,4 @@ class MonsterElement(SafeDeleteModel):
     history = HistoricalRecords()
 
     def __str__(self):
-        return f'{self.monster.name} - {element}'
+        return f'{self.monster.name} - {self.element}'

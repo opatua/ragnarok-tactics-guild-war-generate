@@ -6,5 +6,7 @@ from .monster import *
 from .monster_element import *
 from .resonance import *
 from .resonance_recipe import *
+from .simulator import *
+from .simulator_attribute import *
 from .team import *
 from .user import *

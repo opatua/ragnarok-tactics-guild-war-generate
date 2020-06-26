@@ -5,8 +5,8 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
-from ragnarok.models import Resonance, ResonaceRecipe
-from ragnarok.forms import ResonanceForm, ResonaceRecipeFormset
+from ragnarok.models import Resonance, ResonanceRecipe
+from ragnarok.forms import ResonanceForm, ResonanceRecipeFormset
 
 
 class ResonanceDataView(BaseDatatableView):
@@ -65,11 +65,11 @@ class ResonanceCreateView(LoginRequiredMixin, CreateView):
         ).get_context_data(*args, **kwargs)
         context['title'] = 'Create'
         if self.request.POST:
-            context['resonance_recipes'] = ResonaceRecipeFormset(
+            context['resonance_recipes'] = ResonanceRecipeFormset(
                 self.request.POST
             )
         else:
-            context['resonance_recipes'] = ResonaceRecipeFormset()
+            context['resonance_recipes'] = ResonanceRecipeFormset()
         return context
 
     def form_valid(self, form):
@@ -99,12 +99,12 @@ class ResonanceUpdateView(LoginRequiredMixin, UpdateView):
         ).get_context_data(**kwargs)
         context['title'] = 'Update - {}'.format(self.object.name)
         if self.request.POST:
-            context['resonance_recipes'] = ResonaceRecipeFormset(
+            context['resonance_recipes'] = ResonanceRecipeFormset(
                 self.request.POST,
                 instance=self.object
             )
         else:
-            context['resonance_recipes'] = ResonaceRecipeFormset(
+            context['resonance_recipes'] = ResonanceRecipeFormset(
                 instance=self.object
             )
         return context
@@ -128,6 +128,6 @@ class ResonanceDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('resonance_index')
 
     def delete(self, request, *args, **kwargs):
-        ResonaceRecipe.objects.filter(resonance_id=kwargs.get('pk')).delete()
+        ResonanceRecipe.objects.filter(resonance_id=kwargs.get('pk')).delete()
 
         return super().delete(request, *args, **kwargs)

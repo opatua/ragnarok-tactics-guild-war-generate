@@ -6,4 +6,5 @@ from .login import *
 from .logout import *
 from .monster import *
 from .resonance import *
+from .simulator import *
 from .user import *

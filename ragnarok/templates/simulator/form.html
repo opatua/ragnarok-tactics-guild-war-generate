@@ -1,4 +1,4 @@
-{% extends 'base_public.html' %}
+{% extends "base_public.html" %}
 {% load static %}
 
 {% block content %}
@@ -7,16 +7,16 @@
             <form method="post">{% csrf_token %}
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Character {{ title }}</h4>
+                        <h4 class="card-title">Simulator {{ title }}</h4>
                     </div>
                     <div class="card-body">
                         {{ form.as_p }}
                         <div class="table-responsive mt-5 mb-5">
                             <table class="table table-striped">
-                                <h5 class="card-title">Teams</h5>
-                                {{ teams.management_form }}
+                                <h5 class="card-title">Elements</h5>
+                                {{ simulator_attributes.management_form }}
 
-                                {% for form in teams.forms %}
+                                {% for form in simulator_attributes.forms %}
                                     {% if forloop.first %}
                                         <thead>
                                         <tr>
@@ -45,7 +45,7 @@
                         </div>
                         <hr class="mb-5">
                         <button type="submit" class="btn btn-lg btn-primary">Save</button>
-                        <a href="{% url 'guild_war_character_index' %}" class="btn btn-lg btn-secondary">Cancel</a>
+                        <a href="{% url 'simulator_index' %}" class="btn btn-lg btn-secondary">Cancel</a>
                     </div>
                 </div>
             </form>
@@ -57,9 +57,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.min.js"></script>
     <script type="text/javascript">
         $('.formset_row').formset({
-            addText: '<button class="btn btn-info">Add Team</button>',
+            addText: '<button class="btn btn-info">Add Elements</button>',
             deleteText: '<button class="btn btn-danger">Delete</button>',
-            prefix: '{{ teams.prefix }}'
+            prefix: '{{ simulator_attributes.prefix }}'
         });
     </script>
 {% endblock %}

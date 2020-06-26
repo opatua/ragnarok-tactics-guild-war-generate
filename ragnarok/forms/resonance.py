@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory
 
-from ragnarok.models import Resonance, ResonaceRecipe
+from ragnarok.models import Resonance, ResonanceRecipe
 
 
 class ResonanceForm(forms.ModelForm):
@@ -20,9 +20,9 @@ class ResonanceForm(forms.ModelForm):
             self.fields[field].widget.attrs.update({'class': 'form-control', })
 
 
-class ResonaceRecipeForm(forms.ModelForm):
+class ResonanceRecipeForm(forms.ModelForm):
     class Meta:
-        model = ResonaceRecipe
+        model = ResonanceRecipe
         fields = (
             'resonance',
             'element',
@@ -30,16 +30,16 @@ class ResonaceRecipeForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        super(ResonaceRecipeForm, self).__init__(*args, **kwargs)
+        super(ResonanceRecipeForm, self).__init__(*args, **kwargs)
 
         for field in self.Meta.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control', })
 
 
-ResonaceRecipeFormset = inlineformset_factory(
+ResonanceRecipeFormset = inlineformset_factory(
     Resonance,
-    ResonaceRecipe,
-    form=ResonaceRecipeForm,
+    ResonanceRecipe,
+    form=ResonanceRecipeForm,
     extra=1,
     can_delete=True,
 )

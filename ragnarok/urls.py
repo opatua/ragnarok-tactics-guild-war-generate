@@ -49,6 +49,10 @@ urlpatterns = [
     path('resonance/<slug:pk>/update', views.ResonanceUpdateView.as_view(), name='resonance_update'),
     path('resonance/<slug:pk>/delete', views.ResonanceDeleteView.as_view(), name='resonance_delete'),
 
+    #Simulator
+    path('simulator', views.SimulatorListView.as_view(), name='simulator_index'),
+    path('simulator/create', views.SimulatorCreateView.as_view(), name='simulator_create'),
+
     # User URLs
     path('user/data', views.user.UserDataView.as_view(), name='user_data'),
     path('user', views.user.UserListView.as_view(), name='user_index'),
