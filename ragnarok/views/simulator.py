@@ -7,7 +7,7 @@ from django.shortcuts import reverse, redirect
 from django.views.generic import TemplateView, CreateView
 
 from ragnarok.models import Simulator, SimulatorAttribute, \
-    ResonanceRecipe, Resonance
+    ResonanceRecipe, Resonance, FactionBoost, FactionBoostAttribute
 from ragnarok.forms import SimulatorForm, SimulatorAttributeFormset
 
 
@@ -20,6 +20,9 @@ class SimulatorListView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['resonances'] = Resonance.objects.filter(
             id__in=self.request.GET.getlist('resonance_ids')
+        )
+        context['faction_boosts'] = FactionBoost.objects.filter(
+            id__in=self.request.GET.getlist('faction_boost_ids')
         )
 
         return context
@@ -66,15 +69,18 @@ class SimulatorCreateView(CreateView):
         ]
 
         elements = []
+        factions = []
         for monster in monsters:
             elements.extend(
                 monster.elements.values_list('element', flat=True)
             )
+            factions.append(monster.faction)
         for essence in essences:
             elements.extend(
                 essence.elements.values_list('element', flat=True)
             )
         elements_counter = Counter(elements)
+        factions_counter = Counter(factions)
 
         resonances = []
         for resonance in Resonance.objects.all():
@@ -90,11 +96,25 @@ class SimulatorCreateView(CreateView):
             if len(resonance_elements) == len(match_recipes):
                 resonances.append(resonance)
 
-        if not resonances:
-            return redirect(f"{reverse('simulator_create')}")
+        faction_boosts = []
+        for faction_boost in FactionBoost.objects.all():
+            faction_boost_attributes = faction_boost.factionboostattribute_set.all()
+            match_attributes = []
+            for faction_boost_attribute in faction_boost_attributes:
+                faction_quantity = factions_counter.get(
+                    faction_boost_attribute.faction
+                )
+                if faction_quantity and faction_boost_attribute.quantity <= faction_quantity:
+                    match_attributes.append(faction_boost_attribute)
+
+            if len(faction_boost_attributes) == len(match_attributes):
+                faction_boosts.append(faction_boost)
 
         query_string = ''
         for resonance in resonances:
             query_string += f'resonance_ids={resonance.id}&'
+
+        for faction_boost in faction_boosts:
+            query_string += f'faction_boost_ids={faction_boost.id}&'
 
         return redirect(f"{reverse('simulator_index')}?{query_string}")

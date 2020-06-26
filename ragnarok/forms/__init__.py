@@ -2,6 +2,7 @@ from .auth import *
 from .character import *
 from .country import *
 from .essence import *
+from .faction_boost import *
 from .monster import *
 from .resonance import *
 from .simulator import *

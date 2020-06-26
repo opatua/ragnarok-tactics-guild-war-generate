@@ -28,6 +28,13 @@ urlpatterns = [
     path('essence/<slug:pk>/update', views.EssenceUpdateView.as_view(), name='essence_update'),
     path('essence/<slug:pk>/delete', views.EssenceDeleteView.as_view(), name='essence_delete'),
 
+    # FactionBoost
+    path('faction-boost/data', views.FactionBoostDataView.as_view(), name='faction_boost_data'),
+    path('faction-boost', views.FactionBoostListView.as_view(), name='faction_boost_index'),
+    path('faction-boost/create', views.FactionBoostCreateView.as_view(), name='faction_boost_create'),
+    path('faction-boost/<slug:pk>/update', views.FactionBoostUpdateView.as_view(), name='faction_boost_update'),
+    path('faction-boost/<slug:pk>/delete', views.FactionBoostDeleteView.as_view(), name='faction_boost_delete'),
+
     #Guild War
     path('guild-war-character/data', views.GuildWarCharacterDataView.as_view(), name='guild_war_character_data'),
     path('guild-war-character', views.GuildWarCharacterListView.as_view(), name='guild_war_character_index'),
