@@ -1,3 +1,5 @@
+import uuid
+
 from django import forms
 from django.forms.models import inlineformset_factory
 
@@ -5,6 +7,7 @@ from ragnarok.models import Simulator, SimulatorAttribute
 
 
 class SimulatorForm(forms.ModelForm):
+    id = forms.CharField(widget=forms.HiddenInput(), initial=uuid.uuid4())
 
     class Meta:
         model = Simulator
