@@ -59,6 +59,8 @@ urlpatterns = [
     #Simulator
     path('simulator', views.SimulatorListView.as_view(), name='simulator_index'),
     path('simulator/create', views.SimulatorCreateView.as_view(), name='simulator_create'),
+    path('simulator-admin', views.SimulatorAdminListView.as_view(), name='simulator_admin_index'),
+    path('simulator-admin/create', views.SimulatorAdminCreateView.as_view(), name='simulator_admin_create'),
 
     # User URLs
     path('user/data', views.user.UserDataView.as_view(), name='user_data'),

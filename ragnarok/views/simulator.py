@@ -11,10 +11,9 @@ from ragnarok.models import Simulator, SimulatorAttribute, \
 from ragnarok.forms import SimulatorForm, SimulatorAttributeFormset
 
 
-class SimulatorListView(TemplateView):
+class SimulatorBaseListView(TemplateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
-    template_name = 'simulator/index.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,17 +27,25 @@ class SimulatorListView(TemplateView):
         return context
 
 
-class SimulatorCreateView(CreateView):
+class SimulatorListView(SimulatorBaseListView):
+    def get_template_names(self):
+        return ['simulator/index.html']
+
+
+class SimulatorAdminListView(LoginRequiredMixin, SimulatorBaseListView):
+    def get_template_names(self):
+        return ['simulator/index_admin.html']
+
+
+class SimulatorBaseCreateView(CreateView):
     login_url = reverse_lazy('login')
     redirect_field_name = 'redirect_to'
     model = Simulator
-    template_name = 'simulator/form.html'
     form_class = SimulatorForm
-    # success_url = reverse_lazy('simulator_index')
 
     def get_context_data(self, *args, **kwargs):
         context = super(
-            SimulatorCreateView,
+            SimulatorBaseCreateView,
             self
         ).get_context_data(*args, **kwargs)
         context['title'] = 'Create'
@@ -118,3 +125,13 @@ class SimulatorCreateView(CreateView):
             query_string += f'faction_boost_ids={faction_boost.id}&'
 
         return redirect(f"{reverse('simulator_index')}?{query_string}")
+
+
+class SimulatorCreateView(SimulatorBaseCreateView):
+    def get_template_names(self):
+        return ['simulator/form.html']
+
+
+class SimulatorAdminCreateView(LoginRequiredMixin, SimulatorBaseCreateView):
+    def get_template_names(self):
+        return ['simulator/form_admin.html']
