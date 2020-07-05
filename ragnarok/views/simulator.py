@@ -23,6 +23,8 @@ class SimulatorBaseListView(TemplateView):
         context['faction_boosts'] = FactionBoost.objects.filter(
             id__in=self.request.GET.getlist('faction_boost_ids')
         )
+        context['elements_counter'] = self.request.GET.get('elements_counter')
+        context['factions_counter'] = self.request.GET.get('factions_counter')
 
         return context
 
@@ -124,7 +126,12 @@ class SimulatorBaseCreateView(CreateView):
         for faction_boost in faction_boosts:
             query_string += f'faction_boost_ids={faction_boost.id}&'
 
-        return redirect(f"{reverse('simulator_index')}?{query_string}")
+        redirect_url = reverse('simulator_admin_index') if getattr(self.request.user, 'id', None) \
+            else reverse('simulator_index')
+
+        return redirect(
+            f"{redirect_url}?{query_string}&elements_counter={dict(elements_counter)}&factions_counter={dict(factions_counter)}"
+        )
 
 
 class SimulatorCreateView(SimulatorBaseCreateView):
