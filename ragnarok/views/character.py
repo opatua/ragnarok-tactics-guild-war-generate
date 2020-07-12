@@ -13,6 +13,7 @@ class CharacterDataView(BaseDatatableView):
     model = Character
     columns = [
         'name',
+        'updated_at',
         'manage',
     ]
 

@@ -84,6 +84,7 @@ class GuildWarCharacterDataView(BaseDatatableView):
     model = Character
     columns = [
         'name',
+        'updated_at',
         'manage',
     ]
 
