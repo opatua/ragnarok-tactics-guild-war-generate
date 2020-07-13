@@ -42,7 +42,8 @@ class CharacterDataView(BaseDatatableView):
                 Q(id__icontains=search) |
                 Q(name__icontains=search)
             )
-        return qs
+
+        return qs.order_by('-updated_at')
 
 
 class CharacterListView(LoginRequiredMixin, TemplateView):

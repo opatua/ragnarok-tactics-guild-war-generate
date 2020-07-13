@@ -106,7 +106,8 @@ class GuildWarCharacterDataView(BaseDatatableView):
             qs = qs.filter(
                 Q(name__icontains=search)
             )
-        return qs
+
+        return qs.order_by('-updated_at')
 
 
 class GuildWarCharacterCreateView(CreateView):
