@@ -7,7 +7,8 @@ from django.shortcuts import reverse, redirect
 from django.views.generic import TemplateView, CreateView
 
 from ragnarok.models import Simulator, SimulatorAttribute, \
-    ResonanceRecipe, Resonance, FactionBoost, FactionBoostAttribute
+    ResonanceRecipe, Resonance, FactionBoost, FactionBoostAttribute,\
+    Monster
 from ragnarok.forms import SimulatorForm, SimulatorAttributeFormset
 
 
@@ -22,6 +23,9 @@ class SimulatorBaseListView(TemplateView):
         )
         context['faction_boosts'] = FactionBoost.objects.filter(
             id__in=self.request.GET.getlist('faction_boost_ids')
+        )
+        context['monsters'] = Monster.objects.filter(
+            id__in=self.request.GET.getlist('monster_ids')
         )
         context['elements_counter'] = self.request.GET.get('elements_counter')
         context['factions_counter'] = self.request.GET.get('factions_counter')
@@ -125,6 +129,9 @@ class SimulatorBaseCreateView(CreateView):
 
         for faction_boost in faction_boosts:
             query_string += f'faction_boost_ids={faction_boost.id}&'
+
+        for monster in monsters:
+            query_string += f'monster_ids={monster.id}&'
 
         redirect_url = reverse('simulator_admin_index') if getattr(self.request.user, 'id', None) \
             else reverse('simulator_index')
