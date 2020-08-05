@@ -1,3 +1,5 @@
+import json
+
 from collections import Counter
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import transaction
@@ -8,7 +10,7 @@ from django.views.generic import TemplateView, CreateView
 
 from ragnarok.models import Simulator, SimulatorAttribute, \
     ResonanceRecipe, Resonance, FactionBoost, FactionBoostAttribute,\
-    Monster
+    Monster, Essence
 from ragnarok.forms import SimulatorForm, SimulatorAttributeFormset
 
 
@@ -24,9 +26,20 @@ class SimulatorBaseListView(TemplateView):
         context['faction_boosts'] = FactionBoost.objects.filter(
             id__in=self.request.GET.getlist('faction_boost_ids')
         )
-        context['monsters'] = Monster.objects.filter(
-            id__in=self.request.GET.getlist('monster_ids')
-        )
+
+        teams = []
+        for team in self.request.GET.getlist('teams'):
+            for monster_id, essence_id in json.loads(team).items():
+                monster = Monster.objects.filter(
+                    id=monster_id
+                ).first()
+                essence = Essence.objects.filter(
+                    id=essence_id
+                ).first()
+
+                teams.append({monster: essence})
+
+        context['teams'] = teams
         context['elements_counter'] = self.request.GET.get('elements_counter')
         context['factions_counter'] = self.request.GET.get('factions_counter')
 
@@ -132,6 +145,12 @@ class SimulatorBaseCreateView(CreateView):
 
         for monster in monsters:
             query_string += f'monster_ids={monster.id}&'
+
+        for simulator_attribute in simulator_attributes.cleaned_data:
+            team = {
+                str(simulator_attribute.get('monster').id): str(simulator_attribute.get('essence').id)
+            }
+            query_string += f'teams={json.dumps(team)}&'
 
         redirect_url = reverse('simulator_admin_index') if getattr(self.request.user, 'id', None) \
             else reverse('simulator_index')
