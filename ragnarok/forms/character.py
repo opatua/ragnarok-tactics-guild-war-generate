@@ -11,6 +11,7 @@ class CharacterForm(forms.ModelForm):
         fields = (
             'user',
             'name',
+            'real_name',
         )
 
     def __init__(self, *args, **kwargs):
