@@ -35,7 +35,7 @@ class CharacterDataView(BaseDatatableView):
             teams = Team.objects.filter(character_id=row.pk).order_by('-point')
             team_cp = ''
             for team in teams:
-                team_cp += f'<br>{team.point}'
+                team_cp += f'{team.point}<br/>'
 
             return team_cp
 
