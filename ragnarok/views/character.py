@@ -13,6 +13,7 @@ class CharacterDataView(BaseDatatableView):
     model = Character
     columns = [
         'name',
+        'team_cp',
         'updated_at',
         'manage',
     ]
@@ -27,13 +28,18 @@ class CharacterDataView(BaseDatatableView):
                 'character_delete',
                 kwargs={'pk': row.pk}
             )
-            manage = "<a href='{}' class='btn btn-info'><i class='fa fa-pencil-alt'></i></a>&nbsp;<a href='{}' class='btn btn-danger'><i class='fa fa-trash'></i></a>".format(
-                update_link,
-                delete_link
-            )
+            manage = f"<a href='{update_link}' class='btn btn-info'><i class='fa fa-pencil-alt'></i></a>&nbsp;<a href='{delete_link}' class='btn btn-danger'><i class='fa fa-trash'></i></a>"
+
             return manage
-        else:
-            return super(CharacterDataView, self).render_column(row, column)
+        elif column == 'team_cp':
+            teams = Team.objects.filter(character_id=row.pk).order_by('-point')
+            team_cp = ''
+            for team in teams:
+                team_cp += f'<br>{team.point}'
+
+            return team_cp
+
+        return super(CharacterDataView, self).render_column(row, column)
 
     def filter_queryset(self, qs):
         search = self.request.GET.get('search[value]', None)
